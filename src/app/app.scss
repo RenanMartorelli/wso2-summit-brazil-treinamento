@@ -14,3 +14,33 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+
+  ion-title{
+
+    @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url('../assets/fonts/Nunito/300/nunito300.woff2');
+      
+      }
+
+    font-family: 'Nunito Sans' !important;
+    font-weight: 400 !important;
+  }
+
+  ion-content{
+    @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url('../assets/fonts/Nunito/300/nunito300.woff2');
+      
+      }
+
+    font-family: 'Nunito Sans' !important;
+    font-weight: 400 !important;
+  }
+

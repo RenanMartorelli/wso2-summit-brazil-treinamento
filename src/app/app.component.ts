@@ -1,30 +1,55 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { LoginPage } from '../pages/login/login';
+import { Geolocation } from '@ionic-native/geolocation';
+import { AgendaPage } from '../pages/agenda/agenda';
+import { UsuarioAtivoProvider } from '../providers/usuario-ativo/usuario-ativo';
+import { Usuario } from '../models/usuario';
+import { Events } from 'ionic-angular';
+import { DaoProvider } from '../providers/dao/dao';
+
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+  usuario: Usuario;
+  rootPage: any = LoginPage;
 
-  rootPage: any = HomePage;
+  pages: Array<{ title: string, component: any }>;
 
-  pages: Array<{title: string, component: any}>;
+  constructor(
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+    public events: Events,
+    public usuarioAtivoProvider: UsuarioAtivoProvider,
+    public platform: Platform,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen,
+    private daoProvider: DaoProvider,
+    private geolocation: Geolocation,
+    private alertCtrl: AlertController,
+    private backgroundGeolocation: BackgroundGeolocation) {
     this.initializeApp();
+
+    this.usuario = {
+      nome: '',
+      senha: ''
+    }
+
+    events.subscribe('usuario logado', (usuario) => {
+      this.usuario = usuario;
+    });
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Coordenadas', component: AgendaPage }
     ];
-
   }
 
   initializeApp() {
@@ -35,6 +60,35 @@ export class MyApp {
       this.splashScreen.hide();
     });
   }
+
+  ionViewWillLoad() {
+    this.usuario = this.usuarioAtivoProvider.getUsuario();
+  }
+
+  chamaAlertLogout() {
+    let alert = this.alertCtrl.create({
+      title: 'Tem certeza que deseja deslogar?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Sim',
+          handler: () => {
+            this.daoProvider.deletaUsuarioAtivo();
+            this.nav.setRoot(LoginPage);
+            console.log('Buy clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
 
   openPage(page) {
     // Reset the content nav to have just this page

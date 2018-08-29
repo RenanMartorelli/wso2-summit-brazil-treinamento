@@ -1,3 +1,31 @@
-page-home {
 
+  
+  page-home {
+
+    @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 300;
+        src: url('../assets/fonts/Nunito/300/nunito300.woff2');
+      
+      }
+
+      font-family: 'Nunito Sans' !important;
+      font-weight: 400 !important;
+
+      .swiper-pagination-bullet-active {
+        background-color: #ff5000;
+      }
+      
+
+        img {
+            position: fixed;
+            left: 20px;
+            top: 50px;
+            margin: 10px;
+            width: 80% !important;
+        }
+     
+
+    
 }

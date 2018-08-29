@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Coordenadas</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Coordenadas gravadas</h2>
+
+  <ion-list>
+    <ion-item>
+      <p>Latitude, longitude e Hora e modo</p>
+    </ion-item>
+  </ion-list>
+  <div margin-top margin-bottom *ngFor="let coordenada of coordenadas">
+    <p>Latitude: {{coordenada.latitude}}</p>
+    <p>Longitude: {{coordenada.longitude}}</p>
+    <p>Data/horário: {{coordenada.date | date:'dd/MM HH:mm:ss'}}</p>
+    <p>Modo: {{coordenada.modo}}</p>
+    <p>|</p>
+  </div>
+
+</ion-content>

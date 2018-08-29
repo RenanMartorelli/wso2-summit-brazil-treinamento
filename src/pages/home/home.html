@@ -1,18 +1,79 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>WSO2 Summit LATAM</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content padding="">
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-fab top right margin-top *ngIf="mostraSlidesIniciais == true">
+    <button ion-fab (click)="fechaSlides()" color="primary">
+      <ion-icon name="close"></ion-icon>
+    </button>
+  </ion-fab>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-slides pager="true" *ngIf="mostraSlidesIniciais == true">
+
+
+    <ion-slide>
+      <h1>Bem vindo ao app da WSO2 Summit - América Latina</h1>
+      <img src="../../assets/imgs/logoTransp.png">
+      <h3> Arraste para a direita para prosseguir</h3>
+    </ion-slide>
+
+    <ion-slide padding>
+      <h1>Confira as utilidades que agora você tem acesso!</h1>
+      <ion-row margin-top>
+        <ion-col col-1>
+          <ion-icon name="time"></ion-icon>
+        </ion-col>
+        <ion-col col-11>
+          <h6 text-left>Horários e inscrições nas palestras e workshops do evento</h6>
+        </ion-col>
+      </ion-row>
+
+      <ion-row margin-top>
+        <ion-col col-1>
+          <ion-icon name="contacts"></ion-icon>
+        </ion-col>
+        <ion-col col-11>
+          <h6 text-left>Quickonnect - Networking de todos os contatos que participaram de atividades específicas com você</h6>
+        </ion-col>
+      </ion-row>
+
+      <ion-row margin-top>
+        <ion-col col-1>
+          <ion-icon name="globe"></ion-icon>
+        </ion-col>
+        <ion-col col-11>
+          <h6 text-left>Anúncios e informações relevantes sobre o evento, distribuidas apenas pelo app</h6>
+        </ion-col>
+      </ion-row>
+
+    </ion-slide>
+    <ion-slide>
+      <button (click)="fechaSlides()" ion-button large>Entendido!</button>
+    </ion-slide>
+  </ion-slides>
+  <div *ngIf="mostraSlidesIniciais == false">
+    <h2>Teste de localizacao de GPS</h2>
+    <button ion-button color="primary" (click)="iniciaRastreamento()">Iniciar</button>
+    <button ion-button outline color="primary" (click)="interrompeRastreamento()">Interromper</button>
+    <h3>Latitude atual:</h3>
+    <p>{{this.rastreadorLocalizacao.lat}}</p>
+    <h3>Longitude atual:</h3>
+    <p>{{this.rastreadorLocalizacao.lng}}</p>
+
+    <button (click)="pedePermissaoSms()" margin-top ion-button block outline>Requisitar Permissão SMS</button>
+    <button (click)="aguardaSms()" margin-top ion-button block>Aguardar SMS</button>
+
+    <p>Remetente: {{this.capturaSmsProvider.remetente}}</p>
+    <p>Mensagem: {{this.capturaSmsProvider.mensagem}}</p>
+
+    <button (click)="desbloqueiaMensagem()" margin-top ion-button block color="dark">Desbloquear mensagem</button>
+    <h5 text-center>{{mensagemSecreta}}</h5>
+  </div>
 </ion-content>
