@@ -1,0 +1,52 @@
+page-inscricao {
+        
+            @font-face {
+                font-family: 'Nunito Sans';
+                font-style: normal;
+                font-weight: 300;
+                src: url('../assets/fonts/Nunito/300/nunito300.woff2');
+              }
+        
+              h5 {
+                color: white;
+              }
+        
+              h6 {
+                  color: white;
+                  font-weight: 300;
+              }
+        
+              .input-box {
+                  height: 40px;
+                  margin-top: 20px;
+              }
+
+              .input-box-select {
+                  padding: 0px;
+              }
+
+              ion-select{
+                  padding-left: 9px !important;
+                  padding-top: 15px !important;
+                  max-width: 100%;
+              }
+              
+        
+              font-family: 'Nunito Sans' !important;
+              font-weight: 400 !important;
+        
+              .content-md, .content-ios {
+                background-color: #222;
+            }
+        
+              .item-md {
+                  padding-left: 0;
+              }
+        
+              .item-md {
+                padding-left: 0;
+            }
+        
+        
+        
+}

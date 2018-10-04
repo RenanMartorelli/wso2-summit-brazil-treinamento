@@ -1,0 +1,28 @@
+page-sobre-o-evento {
+    .content-md, .content-ios  {
+        background-color: #222;
+    }
+
+    p, h2, h4 {
+        color: white;
+    }
+
+    h4 {
+        font-weight: 200;
+    }
+
+    .background-header-img1{
+        position: absolute;
+    }
+
+    .background-header-img2{
+        padding: 0 20px 0 20px;
+        position: absolute;
+        top: 5em;
+    }
+
+    .texto{
+        position: relative;
+        top: 12.5em;
+    }
+}

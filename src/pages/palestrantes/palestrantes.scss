@@ -1,0 +1,54 @@
+page-palestrantes {
+
+    h1, h5,   {
+        color: white;
+    }
+
+    h6 {
+        font-weight: 300;
+        color: #DDD;
+    }
+
+    h4{
+        color:#ff6f32;
+    }
+
+    h5{
+        font-weight: 400;
+    }
+
+    ion-icon {
+        font-size: 1.6em;
+    }
+    
+    .img-palestrante{
+        width: 70%;
+        height: 70%;
+        border-radius: 10em;
+        border: 6px #333 solid;
+        margin-bottom: -1.4em;
+    }
+
+    .titulo-palestrante{
+        position: relative;
+        margin:auto;
+        padding: 5px;
+        border-radius: 5px;
+        width: 80%;        background-color: #ff5000;
+    }
+
+    .slide-palestrante{
+        align-items: baseline;
+    }
+
+    .icones{
+        width: 100%;
+        position: absolute;
+        bottom: 0.5em;
+    }
+
+    .content-md, .content-ios  {
+        background-color: #222;
+    }
+
+}

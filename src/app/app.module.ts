@@ -21,17 +21,25 @@ import { NotificacaoLocalProvider } from '../providers/notificacao-local/notific
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { AutenticacaoDigitalProvider } from '../providers/autenticacao-digital/autenticacao-digital';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
-
+import { MenuPage } from '../pages/menu/menu';
+import { InscricaoPage } from '../pages/inscricao/inscricao';
+import { ApiUsuariosProvider } from '../providers/api-usuarios/api-usuarios';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     AgendaPage,
-    LoginPage
+    LoginPage,
+    MenuPage,
+    InscricaoPage
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'WSO2_CONF_APP_DATABASE',
@@ -43,7 +51,9 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
     MyApp,
     HomePage,
     AgendaPage,
-    LoginPage
+    LoginPage,
+    InscricaoPage,
+    MenuPage
   ],
   providers: [
     StatusBar,
@@ -60,7 +70,10 @@ import { FingerprintAIO } from '@ionic-native/fingerprint-aio';
     NotificacaoLocalProvider,
     LocalNotifications,
     AutenticacaoDigitalProvider,
-    FingerprintAIO
+    FingerprintAIO,
+    ApiUsuariosProvider,
+    HttpClient,
+    ImagePicker
   ]
 })
 export class AppModule { }

@@ -11,28 +11,44 @@ import { Events } from 'ionic-angular';
 */
 @Injectable()
 export class UsuarioAtivoProvider {
-
-  usuario: Usuario;
+  accessTokenUsuario: string;
+  refreshTokenUsuario: string;
+  
+  public usuario: Usuario = {
+    nome: "",
+    sobrenome: "",
+    email: "",
+    senha: "",
+    numeroTelefone: "",
+    cargo: "",
+    empresa: "",
+    pais: "",
+    estado: "",
+    areaDeInteresse: "",
+  }
   constructor(
     public events: Events
   ) {
     console.log('Hello UsuarioAtivoProvider Provider');
   }
 
-  setUsuario(usuario) {
+  setUsuarioAtual(usuario, access_token, refresh_token) {
 
-    this.usuario = usuario;
+    this.usuario.nome = usuario;
+    this.accessTokenUsuario = access_token;
+    this.refreshTokenUsuario = refresh_token;
     this.events.publish('usuario logado', usuario);
   }
 
   getUsuario() {
     return this.usuario;
   }
+  getAccessToken() {
+    return this.accessTokenUsuario;
+  }
 
-  firstLoginToggle() {
-    if (this.usuario.firstLogin == true) {
-      this.usuario.firstLogin = false;
-    }
+  getRefreshToken() {
+    return this.refreshTokenUsuario;
   }
 
 }

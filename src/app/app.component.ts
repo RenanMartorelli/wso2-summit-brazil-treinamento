@@ -11,6 +11,7 @@ import { UsuarioAtivoProvider } from '../providers/usuario-ativo/usuario-ativo';
 import { Usuario } from '../models/usuario';
 import { Events } from 'ionic-angular';
 import { DaoProvider } from '../providers/dao/dao';
+import { MenuPage } from '../pages/menu/menu';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { DaoProvider } from '../providers/dao/dao';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   usuario: Usuario;
-  rootPage: any = LoginPage;
+  rootPage: any = MenuPage;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -36,19 +37,15 @@ export class MyApp {
     private backgroundGeolocation: BackgroundGeolocation) {
     this.initializeApp();
 
-    this.usuario = {
-      nome: '',
-      senha: ''
-    }
-
-    events.subscribe('usuario logado', (usuario) => {
-      this.usuario = usuario;
-    });
+    /* events.subscribe('usuario logado', (usuario) => {
+       this.usuario = usuario;
+     }); */
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
-      { title: 'Coordenadas', component: AgendaPage }
+      { title: 'Coordenadas', component: AgendaPage },
+      { title: 'Menu', component: MenuPage }
     ];
   }
 
@@ -62,7 +59,7 @@ export class MyApp {
   }
 
   ionViewWillLoad() {
-    this.usuario = this.usuarioAtivoProvider.getUsuario();
+
   }
 
   chamaAlertLogout() {

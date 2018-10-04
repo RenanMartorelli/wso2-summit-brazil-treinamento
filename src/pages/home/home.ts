@@ -44,23 +44,23 @@ export class HomePage {
 
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() { /*
     this.usuario = this.usuarioAtivoProvider.getUsuario();
     console.log(this.usuario);
     this.mostraSlides();
-
+    */
   }
 
-  mostraSlides() {
+  /*mostraSlides() {
     if (this.usuario.firstLogin == true) {
       this.mostraSlidesIniciais = true
     } else this.mostraSlidesIniciais = false;
-  }
+  }*/
 
-  fechaSlides() {
+  /*fechaSlides() {
     this.mostraSlidesIniciais = false;
     this.usuarioAtivoProvider.firstLoginToggle();
-  }
+  }*/
 
   pedePermissaoSms() {
     this.capturaSmsProvider.pedePermissaoSms();

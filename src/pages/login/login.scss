@@ -7,8 +7,26 @@ page-login {
         src: url('../assets/fonts/Nunito/300/nunito300.woff2');
       }
 
+      h5 {
+        color: white;
+      }
+
+      h6 {
+          color: white;
+          font-weight: 300;
+      }
+
+      .input-box {
+          margin-top: 20px;
+      }
+      
+
       font-family: 'Nunito Sans' !important;
       font-weight: 400 !important;
+
+      .content-md, .content-ios  {
+        background-color: #222;
+    }
 
       .item-md {
           padding-left: 0;

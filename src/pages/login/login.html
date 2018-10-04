@@ -13,25 +13,27 @@
 </ion-header>
 
 
-<ion-content padding>
-  <img src="../../assets/imgs/logoTransp.png">
+<ion-content color="dark" padding>
+  <img src="../../assets/imgs/Wso2-banner-home-app.png">
 
-  <h5>Login with your registered credentials</h5>
+  <h5 text-center>Realize login com seu e-mail e senha</h5>
 
   <form (ngSubmit)="efetuaLogin()">
 
     <ion-list>
-      <ion-item>
+      <ion-item class="input-box">
         <ion-input type="text" [(ngModel)]="credencial" name="credencial" placeholder="Credencial"></ion-input>
       </ion-item>
 
-      <ion-item>
+      <ion-item class="input-box">
         <ion-input [(ngModel)]="senha" name="senha" type="password" placeholder="Senha"></ion-input>
       </ion-item>
     </ion-list>
 
-    <button margin-top ion-button block type="submit">Log-in</button>
-    <button margin-top ion-button block type="button" (click)="criaUsuario()" outline>Nova conta</button>
+    <button margin-top ion-button block (click)="fazLogin()" type="button">Log-in</button>
+    <button margin-top color="light" (click)="goToInscricaoPage()" ion-button outline block type="button">Nova inscrição</button>
+    <h6>Ao Realizar seu login, você terá acesso ao chat com os participantes do evento e poderá colaborar com o mural de recados.
+    </h6>
 
 
   </form>
