@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Usuario } from '../../models/usuario';
 import { Coordenada } from '../../models/coordenada';
-import { UsuarioAtivoProvider } from '../usuario-ativo/usuario-ativo';
 
 /*
   Generated class for the DaoProvider provider.
@@ -16,7 +15,6 @@ export class DaoProvider {
   public match: boolean
   public usuario: Usuario;
   constructor(
-    private usuarioAtivoProvider: UsuarioAtivoProvider,
     private storage: Storage) {
 
     console.log('Hello DaoProvider Provider');
@@ -29,9 +27,6 @@ export class DaoProvider {
         this.usuario = usuario;
         cbSucesso();
       } else cbFalha();
-
-    }).catch(() => {
-      cbFalha();
     });
   }
 
@@ -46,7 +41,6 @@ export class DaoProvider {
 
 
   insereUsuario(usuario: Usuario) {
-
     console.log(usuario);
     let chave: string = usuario.nome;
     this.storage.set(chave, usuario).then(() => {
@@ -70,16 +64,16 @@ export class DaoProvider {
     });
   }
 
-  insereCoordenada(coordenada: Coordenada) {
+  /* insereCoordenada(coordenada: Coordenada) {
 
     console.log(coordenada);
     let chave: string = coordenada.usuario.nome + ' ' + coordenada.date;
     this.storage.set(chave, coordenada).then(() => {
       console.log("Deveria ter funfado")
     });
-  }
+  } */
 
-  pegaCoordenadas() {
+  /*pegaCoordenadas() {
     let coordenadas: Coordenada[] = [];
     this.storage.forEach((coordenada: Coordenada) => {
 
@@ -91,5 +85,5 @@ export class DaoProvider {
       }
     });
     return coordenadas;
-  }
+  } */
 }

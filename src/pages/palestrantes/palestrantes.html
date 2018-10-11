@@ -16,15 +16,15 @@
 <ion-content padding>
 
   <ion-slides>
-    <ion-slide *ngFor="let palestrante of palestrantes" class="slide-palestrante">
+    <ion-slide *ngFor="let palestrante of palestrantes; let first = first; let last = last" class="slide-palestrante">
       <img class="img-palestrante" src="{{palestrante.foto}}">
       <h1 class="titulo-palestrante">{{palestrante.nome}}</h1>
       <h5>{{palestrante.curriculo}}</h5>
       <h6 margin-top>Irá palestrar sob o tema:</h6>
       <h4>{{palestrante.tema}}</h4>
       <ion-row class="icones" padding-bottom margin-top>
-        <ion-col *ngIf="firstSlide!=true" col-4>
-          <ion-icon color="light" name="arrow-back"></ion-icon>
+        <ion-col col-4>
+          <ion-icon [ngClass]="{ first: first }" color="light" name="arrow-back"></ion-icon>
 
         </ion-col>
         <ion-col col-4>
@@ -32,8 +32,8 @@
             <ion-icon color="light" name="logo-linkedin"></ion-icon>
           </a>
         </ion-col>
-        <ion-col *ngIf="lastSlide!=true" col-4>
-          <ion-icon color="light" name="arrow-forward"></ion-icon>
+        <ion-col col-4>
+          <ion-icon [ngClass]="{ last: last }" color="light" name="arrow-forward"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-slide>

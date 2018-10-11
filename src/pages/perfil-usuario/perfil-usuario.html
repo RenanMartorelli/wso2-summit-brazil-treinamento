@@ -8,6 +8,11 @@
 
   <ion-navbar color="primary">
     <ion-title>Seu Perfil</ion-title>
+    <ion-buttons end>
+      <button margin-right ion-button icon-only (click)="abreOpcoesPage()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -16,7 +21,7 @@
 <ion-content padding>
   <div class="content-wrapper">
     <img class="img-usuario" (click)="escolheFoto()" src="{{fotoPerfil}}">
-    <h1 class="nome-usuario">{{usuarioAtivo.usuario.nome}}</h1>
+    <h1 class="nome-usuario">{{usuarioAtivo.getNomeCompleto()}}</h1>
     <ion-list margin-top>
       <ion-item>E-mail:
         <p item-end>{{usuarioAtivo.usuario.email}}</p>
@@ -32,4 +37,24 @@
       </ion-item>
     </ion-list>
   </div>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button outline block (click)="deslogar()" color="light">
+        Deslogar
+      </button>
+    </ion-col>
+
+    <ion-col *ngIf="this.usuarioAtivo.usuario.aceitaMensagens == false">
+      <button ion-button block (click)="toggleChat()" color="light">
+        Ativar chat
+      </button>
+    </ion-col>
+
+    <ion-col *ngIf="this.usuarioAtivo.usuario.aceitaMensagens == true">
+      <button ion-button block (click)="toggleChat()" color="primary">
+        Desativar chat
+      </button>
+    </ion-col>
+  </ion-row>
 </ion-content>

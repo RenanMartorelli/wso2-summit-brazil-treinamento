@@ -21,12 +21,12 @@ export class AgendaPage {
     public navCtrl: NavController,
     public navParams: NavParams) {
 
-    this.usuario = this.usuarioAtivoProvider.getUsuario()
+    //  this.usuario = this.usuarioAtivoProvider.getUsuario()
 
   }
 
   ionViewDidLoad() {
-    this.coordenadas = this.daoProvider.pegaCoordenadas()
+    //  this.coordenadas = this.daoProvider.pegaCoordenadas()
   }
 
 

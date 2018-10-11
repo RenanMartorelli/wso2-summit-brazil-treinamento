@@ -12,6 +12,7 @@ import { InscricaoPage } from '../inscricao/inscricao';
 import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { UsuarioAtivoProvider } from '../../providers/usuario-ativo/usuario-ativo';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { Events } from 'ionic-angular/util/events';
 
 /**
  * Generated class for the MenuPage page.
@@ -35,14 +36,16 @@ export class MenuPage {
     public navParams: NavParams,
     public apiUsuarios: ApiUsuariosProvider,
     public usuarioAtivo: UsuarioAtivoProvider,
+    public events: Events,
     private imagePicker: ImagePicker) {
-
+    this.events.subscribe('usuário carregado', () => {
+      this.liberaMenus();
+    });
+    this.isLogado = false;
   }
 
   ionViewWillLoad() {
-
     console.log('ionViewDidLoad MenuPage');
-    this.apiUsuarios.pedeToken();
   }
 
   ionViewWillEnter() {
@@ -50,10 +53,17 @@ export class MenuPage {
   }
 
   liberaMenus() {
-    this.isLogado = false;
-    if (this.usuarioAtivo.usuario.nome != "") {
+    console.log("Antes estava " + this.isLogado);
+
+    if (this.usuarioAtivo.isLogado == true) {
       this.isLogado = true;
     }
+
+    else {
+      this.isLogado = false;
+    }
+
+    console.log("Agora está " + this.isLogado);
   }
 
   abreGaleria() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { DaoProvider } from '../../providers/dao/dao';
@@ -9,6 +9,7 @@ import { MenuPage } from '../menu/menu';
 import { InscricaoPage } from '../inscricao/inscricao';
 import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { ToastController } from 'ionic-angular';
+import { Keyboard } from 'ionic-native';
 
 
 /**
@@ -24,6 +25,8 @@ import { ToastController } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  @ViewChild('focusInput') primeiroInput;
+
 
   private credencial: string;
   private senha: string;
@@ -35,10 +38,17 @@ export class LoginPage {
     public apiUsuarios: ApiUsuariosProvider,
     private toastCtrl: ToastController,
     public events: Events) {
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    this.credencial = this.navParams.get('credencial');
+    this.senha = this.navParams.get('senha');
+
+
+
+
     /* this.daoProvider.verificaUsuarioAtivo(
        () => {
  
@@ -54,6 +64,10 @@ export class LoginPage {
      } */
   }
 
+  ionViewWillEnter() {
+
+  }
+
   goToInscricaoPage() {
     this.navCtrl.pop();
     this.navCtrl.push(InscricaoPage);
@@ -61,7 +75,9 @@ export class LoginPage {
 
   fazLogin() {
     this.apiUsuarios.loginUsuario(this.credencial, this.senha, () => {
+      console.log("Saiu no login.ts")
       this.presentToast();
+      this.usuarioAtivoProvider.isLogado = true;
       this.navCtrl.pop();
     });
   }
@@ -90,10 +106,10 @@ export class LoginPage {
   }
 
   presentToast() {
-    let usuario = this.usuarioAtivoProvider.getUsuario()
+    let usuario = this.usuarioAtivoProvider.getNomeCompleto()
     let loginConfirmadoToast = this.toastCtrl.create({
 
-      message: 'Usuário: ' + usuario + ' logado com sucesso!',
+      message: "Bem-vindo(a) " + usuario + "!",
       duration: 3000,
       position: 'top'
     });

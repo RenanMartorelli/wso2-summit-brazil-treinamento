@@ -12,6 +12,7 @@ import { Usuario } from '../models/usuario';
 import { Events } from 'ionic-angular';
 import { DaoProvider } from '../providers/dao/dao';
 import { MenuPage } from '../pages/menu/menu';
+import { ApiUsuariosProvider } from '../providers/api-usuarios/api-usuarios';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class MyApp {
   pages: Array<{ title: string, component: any }>;
 
   constructor(
-
+    public apiUsuarios: ApiUsuariosProvider,
+    public usuarioAtivo: UsuarioAtivoProvider,
     public events: Events,
     public usuarioAtivoProvider: UsuarioAtivoProvider,
     public platform: Platform,
@@ -55,6 +57,9 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      console.log("Carregou o módulo principal");
+      this.apiUsuarios.pedeTokenConexao();
+      this.usuarioAtivo.getUsuarioAtivoFromDAO();
     });
   }
 

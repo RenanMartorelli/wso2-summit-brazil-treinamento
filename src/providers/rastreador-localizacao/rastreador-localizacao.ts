@@ -37,56 +37,58 @@ export class RastreadorLocalizacaoProvider {
 
   comecaRastrearBackground() {
 
-    let config = {
-      desiredAccuracy: 100,
-      stationaryRadius: 20,
-      distanceFilter: 30,
-      stopOnTerminate: false,
-      notificationTitle: 'geotracker',
-      notificationText: 'Demonstrate background geolocation',
-      activityType: 'other',
-      debug: true,
-      interval: 600000,
-      fastestInterval: 500000,
-      activitiesInterval: 550000
-    };
-
-    this.backgroundGeolocation.configure(config).subscribe((location) => {
-
-      console.log('BackgroundGeolocation:  ' + location.latitude + ',' + location.longitude);
-
-      // Run update inside of Angular's zone
-      this.zone.run(() => {
-        let coordenada: Coordenada = {
-          latitude: location.latitude,
-          longitude: location.longitude,
-          date: new Date().toISOString(),
-          usuario: this.usuarioAtivoProvider.getUsuario(),
-          modo: 'background-geolocation'
-        }
-
-        console.log(coordenada);
-        this.daoProvider.insereCoordenada(coordenada);
-
-
-        this.lat = location.latitude;
-        this.lng = location.longitude;
+    /*  let config = {
+        desiredAccuracy: 100,
+        stationaryRadius: 20,
+        distanceFilter: 30,
+        stopOnTerminate: false,
+        notificationTitle: 'geotracker',
+        notificationText: 'Demonstrate background geolocation',
+        activityType: 'other',
+        debug: true,
+        interval: 600000,
+        fastestInterval: 500000,
+        activitiesInterval: 550000
+      };
+  
+      this.backgroundGeolocation.configure(config).subscribe((location) => {
+  
+        console.log('BackgroundGeolocation:  ' + location.latitude + ',' + location.longitude);
+  
+        // Run update inside of Angular's zone
+        this.zone.run(() => {
+          let coordenada: Coordenada = {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            date: new Date().toISOString(),
+            usuario: this.usuarioAtivoProvider.getUsuario(),
+            modo: 'background-geolocation'
+          }
+  
+          console.log(coordenada);
+          this.daoProvider.insereCoordenada(coordenada);
+  
+  
+          this.lat = location.latitude;
+          this.lng = location.longitude;
+        });
+  
+        this.backgroundGeolocation.finish();
+  
+      }, (err) => {
+  
+        console.log(err);
+  
       });
-
-      this.backgroundGeolocation.finish();
-
-    }, (err) => {
-
-      console.log(err);
-
-    });
-
-    // Turn ON the background-geolocation system.
-    this.backgroundGeolocation.start();
-
+  
+      // Turn ON the background-geolocation system.
+      this.backgroundGeolocation.start();
+      */
   }
 
   comecaRastrearForeground() {
+
+    /*
     // Foreground Tracking
 
     this.geolocation.getCurrentPosition({
@@ -118,14 +120,15 @@ export class RastreadorLocalizacaoProvider {
          speed: loc.coords.speed,
          time: loc.timestamp
        });*/
-    });
+    // });
+
   }
 
 
   terminaRastrear() {
-    console.log('stopTracking');
-    this.backgroundGeolocation.finish();
-
+    /* console.log('stopTracking');
+     this.backgroundGeolocation.finish();
+ */
   }
 
 }

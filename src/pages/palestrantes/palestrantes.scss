@@ -51,4 +51,20 @@ page-palestrantes {
         background-color: #222;
     }
 
+    .first{
+        display: none;
+    }
+
+    .last{
+        display: none;
+    }
+
+    @media screen and (min-height : 320px) and (max-height : 580px) {
+        .icones {
+            bottom: -0.5em !important;
+        }
+    }
+
+
+
 }

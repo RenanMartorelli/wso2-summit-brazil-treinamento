@@ -17,7 +17,7 @@ import { LoginToken } from '../../models/loginToken';
 @Injectable()
 export class ApiUsuariosProvider {
 
-  private _authToken: string;
+  private _scimAdminToken: string;
 
   constructor(
     public http: HttpClient,
@@ -25,7 +25,8 @@ export class ApiUsuariosProvider {
     console.log('Hello ApiUsuariosProvider Provider');
   }
 
-  pedeToken() {
+  pedeTokenConexao() {
+    /* OAUTH2 POST */
     const url = ' https://localhost:9443/oauth2/token'
     const httpOptions = {
       headers: new HttpHeaders({
@@ -37,12 +38,13 @@ export class ApiUsuariosProvider {
       .map((res: Response) => <LoginToken>res)
       .subscribe(data => {
         console.log(data.access_token);
-        this._authToken = data.access_token;
+        this._scimAdminToken = data.access_token;
       });
 
   }
 
   loginUsuario(usuario, senha, cb) {
+    /* OAUTH2 POST */
     const url = ' https://localhost:9443/oauth2/token'
     const httpOptions = {
       headers: new HttpHeaders({
@@ -56,20 +58,45 @@ export class ApiUsuariosProvider {
         console.log(data);
         if (data.access_token != null) {
           console.log('logado com sucesso!');
-          console.log(atob(data.id_token));
-          this.usuarioAtivo.setUsuarioAtual(usuario, data.access_token, data.refresh_token);
-          cb();
+          let idUsuario = (this.parseJwt(data.id_token));
+          idUsuario = idUsuario.sub;
+          console.log(idUsuario);
+
+          this.pegaDadosUsuario(idUsuario, data.access_token, data.refresh_token, () => {
+            cb();
+          });
         }
       })
   }
 
-  novoUsuario(usuario) {
+  pegaDadosUsuario(idUsuario, access_token, refresh_token, cb) {
+    /* O SCIM2 GET */
+    const url = 'https://localhost:9443/scim2/Users/' + idUsuario;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Accept": "application/json",
+        "Authorization": "Bearer " + this._scimAdminToken
+      })
+    };
+
+    this.http.get(url, httpOptions)
+      .map((res: Response) => <LoginToken>res)
+      .subscribe(data => {
+        console.log(data);
+        this.usuarioAtivo.setUsuario(data, idUsuario);
+        this.usuarioAtivo.setAccessTokens(access_token, refresh_token);
+        cb();
+      })
+  }
+
+  criaUsuario(usuario, cb) {
+    /* SCIM2 POST */
     let nomeUsuario = usuario.nome + '.' + usuario.sobrenome;
     const url = 'https://localhost:9443/scim2/Users';
     const httpOptions = {
       headers: new HttpHeaders({
         "Accept": "application/json",
-        "Authorization": "Bearer " + this._authToken
+        "Authorization": "Bearer " + this._scimAdminToken
       })
     };
 
@@ -82,14 +109,14 @@ export class ApiUsuariosProvider {
       "userName": nomeUsuario,
       "password": usuario.senha,
       "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
-        "employeeNumber": "1231",
-        "costCenter": "13123",
+        "employeeNumber": "",
+        "costCenter": "",
         "organization": usuario.empresa,
         "division": usuario.areaDeInteresse,
         "department": usuario.cargo,
         "manager": {
-          "managerId": "123",
-          "displayName": "12312"
+          "managerId": "",
+          "displayName": ""
         }
       },
       "emails": [
@@ -122,17 +149,19 @@ export class ApiUsuariosProvider {
       .map((res: Response) => <LoginToken>res)
       .subscribe(data => {
         console.log(data);
+        cb(nomeUsuario);
       })
 
   }
 
-  uparImagemUsuario(usuario) {
+  atualizaUsuario(usuario, cb) {
+    /* SCIM2 PUT */
     let nomeUsuario = usuario.nome + '.' + usuario.sobrenome;
-    const url = 'https://localhost:9443/scim2/Users';
+    const url = 'https://localhost:9443/scim2/Users/' + usuario.id;
     const httpOptions = {
       headers: new HttpHeaders({
         "Accept": "application/json",
-        "Authorization": "Bearer " + this._authToken
+        "Authorization": "Bearer " + this._scimAdminToken
       })
     };
 
@@ -143,16 +172,15 @@ export class ApiUsuariosProvider {
         "givenName": usuario.sobrenome
       },
       "userName": nomeUsuario,
-      "password": usuario.senha,
       "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
-        "employeeNumber": "1231",
-        "costCenter": "13123",
-        "organization": "Empresa atualizada!",
+        "employeeNumber": "",
+        "costCenter": "",
+        "organization": usuario.empresa,
         "division": usuario.areaDeInteresse,
         "department": usuario.cargo,
         "manager": {
-          "managerId": "123",
-          "displayName": "12312"
+          "managerId": "",
+          "displayName": ""
         }
       },
       "emails": [
@@ -185,8 +213,38 @@ export class ApiUsuariosProvider {
       .map((res: Response) => <LoginToken>res)
       .subscribe(data => {
         console.log(data);
+        this.usuarioAtivo.setUsuario(data, usuario.id);
+        cb();
+      })
+  }
+
+  uploadImagemUsuario(usuario) {
+    /* SCIM2 PUT - PRECISA ARRUMAR */
+    let nomeUsuario = usuario.nome + '.' + usuario.sobrenome;
+    const url = 'https://localhost:9443/scim2/Users';
+    const httpOptions = {
+      headers: new HttpHeaders({
+        "Accept": "application/json",
+        "Authorization": "Bearer " + this._scimAdminToken
+      })
+    };
+
+    this.http.put(url, {
+      "schemas": [],
+      "userName": nomeUsuario,
+
+    }, httpOptions)
+      .map((res: Response) => <LoginToken>res)
+      .subscribe(data => {
+        console.log(data);
       })
 
   }
+
+  parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(window.atob(base64));
+  };
 
 }

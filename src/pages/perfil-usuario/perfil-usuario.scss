@@ -45,4 +45,51 @@ page-perfil-usuario {
         align-items: baseline;
         text-align: center;
     }
+
+    .input-wrapper{
+        overflow: visible;
+    }
+
+    /* Lista IOS */
+
+    .list-ios > .item-block:first-child{
+        border-top: 0px;
+    }
+
+    .list-ios > .item-block:last-child{
+        border-bottom: 0px;
+    }
+
+    .list-ios .item-block .item-inner {
+        border-bottom: 0px;
+    }
+
+    .item-ios{
+        color: #fff;
+        background-color: #353535;
+        border-bottom: 1px solid #444444;
+
+        p {
+            color: #ddd;
+            text-align: right;
+        }
+    }
+
+        /* Lista ANDROID */
+
+    .item-md{
+        color: #fff;
+        background-color: #353535;
+        border-bottom: 1px solid #444444;
+
+        p {
+            color: #ddd;
+            text-align: right;
+        }
+    }
+
+    .list-md .item-block .item-inner {
+        border-bottom: 0px;
+    }
+
 }

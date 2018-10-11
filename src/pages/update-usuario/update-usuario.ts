@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { Usuario } from '../../models/usuario';
+import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
+import { UsuarioAtivoProvider } from '../../providers/usuario-ativo/usuario-ativo';
 import { LoginPage } from '../login/login';
 
-
 /**
- * Generated class for the InscricaoPage page.
+ * Generated class for the UpdateUsuarioPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -14,16 +14,11 @@ import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
-  selector: 'page-inscricao',
-  templateUrl: 'inscricao.html',
+  selector: 'page-update-usuario',
+  templateUrl: 'update-usuario.html',
 })
-export class InscricaoPage {
+export class UpdateUsuarioPage {
 
-  public nome: string;
-  public sobrenome: string;
-  public email: string;
-  public senha: string;
-  public confirmarSenha: string;
   public numeroTelefone: string;
   public cargo: string;
   public empresa: string;
@@ -48,10 +43,15 @@ export class InscricaoPage {
     , "Uzbekistan", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
 
   constructor(
-    private toastCtrl: ToastController,
+    public usuarioAtivo: UsuarioAtivoProvider,
     public navCtrl: NavController,
     public apiUsuarios: ApiUsuariosProvider,
+    private toastCtrl: ToastController,
     public navParams: NavParams) {
+    this.numeroTelefone = this.usuarioAtivo.usuario.numeroTelefone;
+    this.cargo = this.usuarioAtivo.usuario.cargo;
+    this.empresa = this.usuarioAtivo.usuario.empresa;
+    this.areaDeInteresse = this.usuarioAtivo.usuario.areaDeInteresse;
   }
 
   ionViewDidLoad() {
@@ -59,7 +59,7 @@ export class InscricaoPage {
   }
 
 
-  novoUsuario() {
+  atualizaDados() {
 
     let areaDeInteresseFormatada: string
     for (let i = 0; i < this.areaDeInteresse.length; i++) {
@@ -72,39 +72,35 @@ export class InscricaoPage {
 
     console.log(areaDeInteresseFormatada);
     let usuario: Usuario = {
-      nome: this.nome,
-      sobrenome: this.sobrenome,
-      email: this.email,
-      senha: this.senha,
+      nome: this.usuarioAtivo.usuario.nome,
+      sobrenome: this.usuarioAtivo.usuario.sobrenome,
+      id: this.usuarioAtivo.usuario.id,
+      email: this.usuarioAtivo.usuario.email,
       numeroTelefone: this.numeroTelefone,
       cargo: this.cargo,
       empresa: this.empresa,
-      estado: this.estado,
-      pais: this.pais,
-      areaDeInteresse: areaDeInteresseFormatada
+      areaDeInteresse: areaDeInteresseFormatada,
+      estado: this.usuarioAtivo.usuario.estado,
+      pais: this.usuarioAtivo.usuario.pais,
     }
-    this.apiUsuarios.criaUsuario(usuario, (usuario) => {
-      this.presentToast();
+    this.apiUsuarios.atualizaUsuario(usuario, () => {
+      console.log("Usuário atualizado com sucesso!");
+      this.presentToast()
       this.navCtrl.pop();
-      this.navCtrl.push(LoginPage, {
-        credencial: usuario,
-        senha: this.senha,
-      });
-
-
     });
     console.log('funcao funcionando');
   }
 
   presentToast() {
-    let realizaInscricaoToast = this.toastCtrl.create({
+    let usuario = this.usuarioAtivo.getNomeCompleto()
+    let atulizaInscricaoToast = this.toastCtrl.create({
 
-      message: "Inscrição realizada com sucesso!",
+      message: usuario + "Atualizado com sucesso!",
       duration: 3000,
       position: 'top'
     });
 
-    realizaInscricaoToast.present()
+    atulizaInscricaoToast.present()
   }
 
 }

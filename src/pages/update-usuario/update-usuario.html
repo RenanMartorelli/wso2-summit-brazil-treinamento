@@ -1,0 +1,59 @@
+<!--
+  Generated template for the UpdateUsuarioPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title text-center>Atualizar inscrição</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content color="dark" padding>
+  <img src="../../assets/imgs/Wso2-banner-home-app.png">
+
+
+  <form (ngSubmit)="atualizaDados()">
+
+    <h3 text-center margin-top>{{this.usuarioAtivo.getNomeCompleto()}}</h3>
+    <h5 text-center margin-bottom>{{this.usuarioAtivo.usuario.email}}</h5>
+
+    <ion-list>
+      <ion-item class="input-box">
+        <ion-input autofocus [(ngModel)]="numeroTelefone" name="numeroTelefone" type="tel" placeholder="Numero de Celular"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-box">
+        <ion-input [(ngModel)]="cargo" name="cargo" type="text" placeholder="Cargo atual"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-box">
+        <ion-input [(ngModel)]="empresa" name="empresa" type="text" placeholder="Empresa"></ion-input>
+      </ion-item>
+
+
+      <ion-item class="input-box input-box-select">
+        <ion-select [(ngModel)]="areaDeInteresse" name="areaDeInteresse" placeholder="Área de Interesse" multiple="true">
+          <ion-option value="api management">API Management</ion-option>
+          <ion-option value="integration">Integration</ion-option>
+          <ion-option value="identity e access management">Identity e Access Management</ion-option>
+          <ion-option value="analytics e stream processing">Analytics e Stream Processing</ion-option>
+          <ion-option value="financial solutions">Financial Solutions</ion-option>
+          <ion-option value="iot">IoT</ion-option>
+          <ion-option value="outros">Outros</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+
+    <button margin-top ion-button block type="submit">Atualizar inscrição</button>
+
+
+  </form>
+
+
+</ion-content>
