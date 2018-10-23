@@ -27,6 +27,7 @@ import { ApiUsuariosProvider } from '../providers/api-usuarios/api-usuarios';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { ApiConteudoProvider } from '../providers/api-conteudo/api-conteudo';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { ImagePicker } from '@ionic-native/image-picker';
     FingerprintAIO,
     ApiUsuariosProvider,
     HttpClient,
-    ImagePicker
+    ImagePicker,
+    ApiConteudoProvider
   ]
 })
 export class AppModule { }

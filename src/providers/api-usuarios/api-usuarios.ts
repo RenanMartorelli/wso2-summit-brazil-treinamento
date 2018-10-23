@@ -27,7 +27,7 @@ export class ApiUsuariosProvider {
 
   pedeTokenConexao() {
     /* OAUTH2 POST */
-    const url = ' https://localhost:9443/oauth2/token'
+    const url = 'https://localhost:9443/oauth2/token'
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/x-www-form-urlencoded",
@@ -246,5 +246,4 @@ export class ApiUsuariosProvider {
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     return JSON.parse(window.atob(base64));
   };
-
 }

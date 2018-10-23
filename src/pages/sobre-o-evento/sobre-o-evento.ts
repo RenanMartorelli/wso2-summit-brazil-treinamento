@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ConteudoTexto } from '../../models/conteudoTexto';
+import { ApiConteudoProvider } from '../../providers/api-conteudo/api-conteudo';
 
 /**
  * Generated class for the SobreOEventoPage page.
@@ -15,11 +17,61 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SobreOEventoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public textoParagrafos: string[] = [];
+
+  private _conteudo = [];
+
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private apiConteudo: ApiConteudoProvider) {
+    this._conteudo = [
+      {
+        Header: '',
+        texto: ''
+      },
+      {
+        Header: '',
+        texto: ''
+      },
+      {
+        Header: '',
+        texto: ''
+      },
+      {
+        Header: '',
+        texto: ''
+      },
+    ];
   }
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SobreOEventoPage');
+  }
+
+  ionViewWillLoad() {
+    this.getTextoPagina();
+  }
+
+  formataTexto() {
+    for (let i = 0; i < this._conteudo.length; i++) {
+      let paragrafos;
+      paragrafos = this._conteudo[i].texto
+      paragrafos = paragrafos.split(/\r?\n/);
+      console.log(paragrafos);
+      this.textoParagrafos[i] = paragrafos;
+    }
+  }
+
+  getTextoPagina() {
+    this.apiConteudo.getTextoSobreEvento(() => {
+      this._conteudo = this.apiConteudo.textoSobreEvento;
+      this.formataTexto();
+
+
+      console.log(this._conteudo);
+    });
   }
 
 }

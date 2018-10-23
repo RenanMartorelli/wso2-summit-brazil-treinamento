@@ -7,32 +7,27 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>SobreOEvento</ion-title>
+    <ion-title>Sobre o Evento</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+<!-- Terminar de completar o mock dessa página e da de informações também, criar os json dentro da API -->
 
 <ion-content>
 
   <img class="background-header-img1" src="../../assets/imgs/decoracao-sobre2.png">
   <img class="background-header-img2" src="../../assets/imgs/Wso2-banner-home-app.png">
   <div class="texto" margin-top padding>
-    <h4 margin-bottom>Afinal, Nam eleifend orci ac tortor imperdiet gravida. Phasellus vel ante!
-    </h4>
-    <h2>Para quem se destina?</h2>
-    <p>Etiam non lectus in sapien fringilla semper. Phasellus semper mattis euismod.</p>
+    <h4 margin-bottom>{{_conteudo[0].Header}}</h4>
+    <h2>{{_conteudo[1].Header}}</h2>
+    <p *ngFor="let texto of textoParagrafos[1]">{{texto}}</p>
 
+    <h2>{{_conteudo[2].Header}}</h2>
+    <p *ngFor="let texto of textoParagrafos[2]">{{texto}}</p>
 
-    <h2>O que eu posso aprender?</h2>
-    <p>Etiam non lectus in sapien fringilla semper. Phasellus semper mattis euismod.</p>
-    <p>Vestibulum malesuada tellus est, ac congue felis pretium at. Aenean posuere urna risus, at convallis eros dictum quis.
-      Sed blandit mauris quis ligula lacinia maximus. </p>
-
-    <h2>Haverá taxa de inscrição?</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada
-      fames ac turpis egestas. </p>
-    <p>Vestibulum malesuada tellus est, convallis eros dictum quis. Sed blandit mauris quis ligula lacinia maximus. </p>
+    <h2>{{_conteudo[3].Header}}</h2>
+    <p *ngFor="let texto of textoParagrafos[3]">{{texto}}</p>
   </div>
 
 </ion-content>

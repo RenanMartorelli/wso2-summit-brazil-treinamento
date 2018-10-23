@@ -1,8 +1,8 @@
 export class Activity {
-    date: Date
+    date?: Date
     title: string
-    author: string
+    author?: string
     icon: string
     text: string
-    type: string
+    type?: string
 }

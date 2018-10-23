@@ -17,21 +17,17 @@
   <img src="../../assets/imgs/sp.png">
   <div padding>
     <h2>
-      <ion-icon color="light" name="map"></ion-icon> Local do Evento</h2>
-    <p>Etiam non lectus in sapien fringilla semper. Phasellus semper mattis euismod.</p>
+      <ion-icon color="light" name="map"></ion-icon> {{_conteudo[0].subHeader}}</h2>
+    <p *ngFor="let texto of textoParagrafos[0]">{{texto}}</p>
 
 
     <h2>
-      <ion-icon color="light" name="restaurant"></ion-icon> Alimententação</h2>
-    <p>Etiam non lectus in sapien fringilla semper. Phasellus semper mattis euismod.</p>
-    <p>Vestibulum malesuada tellus est, ac congue felis pretium at. Aenean posuere urna risus, at convallis eros dictum quis.
-      Sed blandit mauris quis ligula lacinia maximus. </p>
+      <ion-icon color="light" name="restaurant"></ion-icon> {{_conteudo[1].subHeader}}</h2>
+    <p *ngFor="let texto of textoParagrafos[1]">{{texto}}</p>
 
 
     <h2>
-      <ion-icon color="light" name="home"></ion-icon> Hospedagem</h2>
-    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada
-      fames ac turpis egestas. </p>
-    <p>Vestibulum malesuada tellus est, convallis eros dictum quis. Sed blandit mauris quis ligula lacinia maximus. </p>
+      <ion-icon color="light" name="home"></ion-icon> {{_conteudo[2].subHeader}}</h2>
+    <p *ngFor="let texto of textoParagrafos[2]">{{texto}}</p>
   </div>
 </ion-content>

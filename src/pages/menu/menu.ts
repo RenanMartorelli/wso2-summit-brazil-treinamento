@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CronogramaPage } from '../cronograma/cronograma';
 import { ChatPage } from '../chat/chat';
 import { PalestrantesPage } from '../palestrantes/palestrantes';
-import { RecadosPage } from '../recados/recados';
+import { AperteBotaoPage } from '../aperte-botao/aperte-botao';
 import { InformacoesPage } from '../informacoes/informacoes';
 import { SobreOEventoPage } from '../sobre-o-evento/sobre-o-evento';
 import { AlertController } from 'ionic-angular';
@@ -13,6 +13,7 @@ import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { UsuarioAtivoProvider } from '../../providers/usuario-ativo/usuario-ativo';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Events } from 'ionic-angular/util/events';
+import { ApiConteudoProvider } from '../../providers/api-conteudo/api-conteudo';
 
 /**
  * Generated class for the MenuPage page.
@@ -35,6 +36,7 @@ export class MenuPage {
     public alertCtrl: AlertController,
     public navParams: NavParams,
     public apiUsuarios: ApiUsuariosProvider,
+    public apiConteudo: ApiConteudoProvider,
     public usuarioAtivo: UsuarioAtivoProvider,
     public events: Events,
     private imagePicker: ImagePicker) {
@@ -84,9 +86,8 @@ export class MenuPage {
     });
 
 
-
-
   }
+
 
   callMensagensPage() {
     if (this.isLogado == true) {

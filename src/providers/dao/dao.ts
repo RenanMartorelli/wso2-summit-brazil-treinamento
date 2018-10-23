@@ -48,21 +48,6 @@ export class DaoProvider {
     });
   }
 
-  validaLogin(usuarioAtual: Usuario, cb) {
-
-    this.match = false
-
-    this.storage.forEach((usuario: Usuario) => {
-      if (usuarioAtual.nome == usuario.nome) {
-        if (usuarioAtual.senha == usuario.senha) {
-          this.match = true;
-          this.setUsuarioAtivo(usuario);
-        }
-      }
-    }).then(() => {
-      cb();
-    });
-  }
 
   /* insereCoordenada(coordenada: Coordenada) {
 
