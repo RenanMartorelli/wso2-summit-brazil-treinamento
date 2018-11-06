@@ -43,7 +43,7 @@ export class ApiUsuariosProvider {
 
   }
 
-  loginUsuario(usuario, senha, cb) {
+  loginUsuario(email, senha, cb, cbError) {
     /* OAUTH2 POST */
     const url = ' https://localhost:9443/oauth2/token'
     const httpOptions = {
@@ -52,8 +52,10 @@ export class ApiUsuariosProvider {
         "Authorization": "Basic " + btoa('59LPtymVyB6q8XcDTuAFMWgNHtMa:tDSw41NeHjudwEUmZ_MNV77epVIa')
       })
     }
-    this.http.post(url, `grant_type=password&username=${usuario}&password=${senha}&scope=openid`, httpOptions)
+    console.log(email);
+    this.http.post(url, `grant_type=password&username=${email}&password=${senha}&scope=openid`, httpOptions)
       .map((res: Response) => <LoginToken>res)
+
       .subscribe(data => {
         console.log(data);
         if (data.access_token != null) {
@@ -66,7 +68,13 @@ export class ApiUsuariosProvider {
             cb();
           });
         }
-      })
+      },
+      error => {
+        console.log("esse é o erro:");
+        console.log(error);
+        cbError();
+      }
+      );
   }
 
   pegaDadosUsuario(idUsuario, access_token, refresh_token, cb) {
@@ -82,16 +90,15 @@ export class ApiUsuariosProvider {
     this.http.get(url, httpOptions)
       .map((res: Response) => <LoginToken>res)
       .subscribe(data => {
-        console.log(data);
-        this.usuarioAtivo.setUsuario(data, idUsuario);
+        let usuario = data;
+        this.usuarioAtivo.setUsuario(usuario, idUsuario);
         this.usuarioAtivo.setAccessTokens(access_token, refresh_token);
         cb();
       })
   }
 
-  criaUsuario(usuario, cb) {
+  criaUsuario(usuario, cbSucesso, cbErro) {
     /* SCIM2 POST */
-    let nomeUsuario = usuario.nome + '.' + usuario.sobrenome;
     const url = 'https://localhost:9443/scim2/Users';
     const httpOptions = {
       headers: new HttpHeaders({
@@ -106,7 +113,7 @@ export class ApiUsuariosProvider {
         "familyName": usuario.nome,
         "givenName": usuario.sobrenome
       },
-      "userName": nomeUsuario,
+      "userName": usuario.nomeUsuario,
       "password": usuario.senha,
       "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
         "employeeNumber": "",
@@ -149,14 +156,26 @@ export class ApiUsuariosProvider {
       .map((res: Response) => <LoginToken>res)
       .subscribe(data => {
         console.log(data);
-        cb(nomeUsuario);
-      })
-
+        cbSucesso();
+      }, error => {
+        let erro: string;
+        console.log(error);
+        if (error.status == 409) {
+          let erro = "Já existe um usuário com esse nome!"
+          console.log(erro);
+        } else {
+          erro = "Ops, algo deu errado, tente novamente mais tarde!"
+          console.log(erro);
+        }
+        cbErro(erro);
+      }
+      )
   }
 
-  atualizaUsuario(usuario, cb) {
+
+
+  atualizaUsuario(usuario, cbSucesso, cbErro) {
     /* SCIM2 PUT */
-    let nomeUsuario = usuario.nome + '.' + usuario.sobrenome;
     const url = 'https://localhost:9443/scim2/Users/' + usuario.id;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -171,7 +190,7 @@ export class ApiUsuariosProvider {
         "familyName": usuario.nome,
         "givenName": usuario.sobrenome
       },
-      "userName": nomeUsuario,
+      "userName": usuario.nomeUsuario,
       "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
         "employeeNumber": "",
         "costCenter": "",
@@ -214,7 +233,11 @@ export class ApiUsuariosProvider {
       .subscribe(data => {
         console.log(data);
         this.usuarioAtivo.setUsuario(data, usuario.id);
-        cb();
+        cbSucesso();
+      },
+      error => {
+        console.log(error);
+        cbErro();
       })
   }
 

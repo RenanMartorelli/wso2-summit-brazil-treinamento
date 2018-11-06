@@ -1,5 +1,7 @@
 page-login {
 
+    
+
     @font-face {
         font-family: 'Nunito Sans';
         font-style: normal;
@@ -7,7 +9,7 @@ page-login {
         src: url('../assets/fonts/Nunito/300/nunito300.woff2');
       }
 
-      h5 {
+      h5, p{
         color: white;
       }
 
@@ -18,6 +20,10 @@ page-login {
 
       .input-box {
           margin-top: 20px;
+      }
+
+      .item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        border-bottom-color: #bb0028;
       }
       
 

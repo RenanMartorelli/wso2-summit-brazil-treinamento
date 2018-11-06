@@ -16,27 +16,29 @@
 <ion-content color="dark" padding>
   <img src="../../assets/imgs/Wso2-banner-home-app.png">
 
-  <h5 text-center>Realize login com seu e-mail e senha</h5>
+  <h5 text-center>Realize login com seu usuário e senha</h5>
 
-  <form (ngSubmit)="efetuaLogin()">
+  <form [formGroup]="loginForm" (ngSubmit)="efetuaLogin()">
 
     <ion-list>
       <ion-item class="input-box">
-        <ion-input autofocus type="text" [(ngModel)]="credencial" name="credencial" placeholder="Credencial"></ion-input>
+        <ion-input type="text" name="nomeUsuario" formControlName="nomeUsuario" placeholder="Nome de usuário"></ion-input>
       </ion-item>
 
       <ion-item class="input-box">
-        <ion-input [(ngModel)]="senha" name="senha" type="password" placeholder="Senha"></ion-input>
+        <ion-input name="senha" formControlName="senha" type="password" placeholder="Senha"></ion-input>
       </ion-item>
     </ion-list>
 
-    <button margin-top ion-button block (click)="fazLogin()" type="button">Log-in</button>
+    <button margin-top ion-button block (click)="fazLogin()" type="button">Entrar</button>
     <button margin-top color="light" (click)="goToInscricaoPage()" ion-button outline block type="button">Nova inscrição</button>
     <h6>Ao Realizar seu login, você terá acesso ao chat com os participantes do evento e poderá colaborar com o mural de recados.
     </h6>
 
-
   </form>
+
+  <p *ngIf="!loginForm.controls.nomeUsuario.valid && submitForm">Por favor, insira um nome de usuário válido.</p>
+  <p *ngIf="loginError">Senha inválida ou usuário não registrado.</p>
 
 
 </ion-content>

@@ -48,14 +48,16 @@ export class UsuarioAtivoProvider {
   }
 
   setUsuario(usuario, id_usuario) {
+    console.log(usuario);
     this.usuario = {
-      nome: "", sobrenome: "", email: "", senha: "",
+      nome: "", sobrenome: "", nomeUsuario: "", email: "", senha: "",
       numeroTelefone: "", cargo: "", empresa: "", pais: "",
       estado: "", areaDeInteresse: "", id: "", aceitaMensagens: true
     }
 
     this.usuario.nome = usuario.name.familyName;
     this.usuario.sobrenome = usuario.name.givenName;
+    this.usuario.nomeUsuario = usuario.userName;
     this.usuario.email = usuario.emails[0].value;
     this.usuario.numeroTelefone = usuario.phoneNumbers[0].value;
     let endereco = usuario.addresses[0].value.split(" / ");
@@ -85,6 +87,7 @@ export class UsuarioAtivoProvider {
     this.usuario = {
       nome: "",
       sobrenome: "",
+      nomeUsuario: "",
       email: "",
       senha: "",
       numeroTelefone: "",

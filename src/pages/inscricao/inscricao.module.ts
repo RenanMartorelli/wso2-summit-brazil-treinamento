@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { InscricaoPage } from './inscricao';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { InscricaoPage } from './inscricao';
   ],
   imports: [
     IonicPageModule.forChild(InscricaoPage),
+    BrMaskerModule
   ],
 })
-export class InscricaoPageModule {}
+export class InscricaoPageModule { }

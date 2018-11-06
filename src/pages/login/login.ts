@@ -10,6 +10,7 @@ import { InscricaoPage } from '../inscricao/inscricao';
 import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { ToastController } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 /**
@@ -28,8 +29,11 @@ export class LoginPage {
   @ViewChild('focusInput') primeiroInput;
 
 
-  private credencial: string;
+  private nomeUsuario: string;
   private senha: string;
+  private loginForm: FormGroup;
+  private submitForm: boolean;
+  private loginError: boolean;
 
   constructor(public navCtrl: NavController,
     public usuarioAtivoProvider: UsuarioAtivoProvider,
@@ -37,14 +41,26 @@ export class LoginPage {
     public navParams: NavParams,
     public apiUsuarios: ApiUsuariosProvider,
     private toastCtrl: ToastController,
-    public events: Events) {
+    public events: Events,
+    public formBuilder: FormBuilder) {
 
+    this.nomeUsuario = this.navParams.get('credencial');
+    this.senha = this.navParams.get('senha');
+    this.loginForm = formBuilder.group({
+      nomeUsuario: [this.nomeUsuario, Validators.compose([Validators.required, Validators.minLength(5)])],
+      senha: [this.senha, Validators.compose([Validators.required, Validators.minLength(5)])]
+    });
   }
 
-  ionViewDidLoad() {
+
+
+
+
+  ionViewWillEnter() {
+    this.submitForm = false;
+    this.loginError = false;
     console.log('ionViewDidLoad LoginPage');
-    this.credencial = this.navParams.get('credencial');
-    this.senha = this.navParams.get('senha');
+
 
 
 
@@ -64,45 +80,27 @@ export class LoginPage {
      } */
   }
 
-  ionViewWillEnter() {
-
-  }
-
   goToInscricaoPage() {
+
     this.navCtrl.pop();
     this.navCtrl.push(InscricaoPage);
   }
 
   fazLogin() {
-    this.apiUsuarios.loginUsuario(this.credencial, this.senha, () => {
+    this.nomeUsuario = this.loginForm.controls.nomeUsuario.value;
+    this.senha = this.loginForm.controls.senha.value;
+    this.submitForm = true;
+
+    console.log(this.submitForm);
+
+    this.apiUsuarios.loginUsuario(this.nomeUsuario, this.senha, () => {
       console.log("Saiu no login.ts")
       this.presentToast();
       this.usuarioAtivoProvider.isLogado = true;
       this.navCtrl.pop();
+    }, () => {
+      this.loginError = true;
     });
-  }
-
-  efetuaLogin() {
-    /*
-        let usuario: Usuario = {
-          nome: this.credencial,
-          senha: this.senha
-        }
-    
-        // Entra aqui o método que conversa com o Back-end
-    
-        this.daoProvider.validaLogin(usuario, () => {
-          if (this.daoProvider.match == true) {
-            usuario.firstLogin = true;
-            this.usuarioAtivoProvider.setUsuario(usuario);
-    
-    
-            //   this.events.publish('usuario-criado', usuario);
-            this.navCtrl.setRoot(HomePage);
-            console.log("login efetuado com sucesso!")
-          }
-        });
-        */
   }
 
   presentToast() {

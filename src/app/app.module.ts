@@ -28,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { ApiConteudoProvider } from '../providers/api-conteudo/api-conteudo';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { ApiConteudoProvider } from '../providers/api-conteudo/api-conteudo';
     IonicStorageModule.forRoot({
       name: 'WSO2_CONF_APP_DATABASE',
       driverOrder: ['indexeddb', 'sqlite', 'websql']
-    })
+    }),
+    BrMaskerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

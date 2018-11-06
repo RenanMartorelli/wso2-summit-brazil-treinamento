@@ -17,27 +17,28 @@
   <img src="../../assets/imgs/Wso2-banner-home-app.png">
 
 
-  <form (ngSubmit)="atualizaDados()">
+  <form [formGroup]="updateForm" (ngSubmit)="atualizaDados()">
 
     <h3 text-center margin-top>{{this.usuarioAtivo.getNomeCompleto()}}</h3>
     <h5 text-center margin-bottom>{{this.usuarioAtivo.usuario.email}}</h5>
 
     <ion-list>
       <ion-item class="input-box">
-        <ion-input autofocus [(ngModel)]="numeroTelefone" name="numeroTelefone" type="tel" placeholder="Numero de Celular"></ion-input>
+        <ion-input autofocus formControlName="numeroTelefone" name="numeroTelefone" type="tel" [brmasker]="{mask:'+55 00 00000-0000', len:17}"
+          placeholder="Telefone celular"></ion-input>
       </ion-item>
 
       <ion-item class="input-box">
-        <ion-input [(ngModel)]="cargo" name="cargo" type="text" placeholder="Cargo atual"></ion-input>
+        <ion-input formControlName="cargo" name="cargo" type="text" placeholder="Cargo atual"></ion-input>
       </ion-item>
 
       <ion-item class="input-box">
-        <ion-input [(ngModel)]="empresa" name="empresa" type="text" placeholder="Empresa"></ion-input>
+        <ion-input formControlName="empresa" name="empresa" type="text" placeholder="Empresa"></ion-input>
       </ion-item>
 
 
       <ion-item class="input-box input-box-select">
-        <ion-select [(ngModel)]="areaDeInteresse" name="areaDeInteresse" placeholder="Área de Interesse" multiple="true">
+        <ion-select formControlName="areaDeInteresse" name="areaDeInteresse" placeholder="Área de Interesse" multiple="true">
           <ion-option value="api management">API Management</ion-option>
           <ion-option value="integration">Integration</ion-option>
           <ion-option value="identity e access management">Identity e Access Management</ion-option>
@@ -51,6 +52,14 @@
     </ion-list>
 
     <button margin-top ion-button block type="submit">Atualizar inscrição</button>
+
+    <h5 *ngIf="tentouEnviar">Por favor, verifique se os seguintes campos foram preenchidos corretamente:</h5>
+    <h6 *ngIf="tentouEnviar && !updateForm.controls.numeroTelefone.valid">Telefone</h6>
+    <h6 *ngIf="tentouEnviar && !updateForm.controls.cargo.valid">Cargo atual</h6>
+    <h6 *ngIf="tentouEnviar && !updateForm.controls.empresa.valid">Empresa</h6>
+    <h6 *ngIf="tentouEnviar && !updateForm.controls.areaDeInteresse.valid">Área de Interesse</h6>
+
+    <h6 *ngIf="existeErroServidor">Opa, algo deu errado!</h6>
 
 
   </form>

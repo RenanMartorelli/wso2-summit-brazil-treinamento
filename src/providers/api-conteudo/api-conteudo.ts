@@ -25,7 +25,7 @@ export class ApiConteudoProvider {
   }
 
   getPalestrantes(cb) {
-    const url = 'http://localhost:9090/conteudo/palestrantes';
+    const url = 'http://192.168.99.100:9090/conteudo/palestrantes';
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export class ApiConteudoProvider {
   }
 
   getBaloesCronograma(cb) {
-    const url = 'http://localhost:9090/conteudo/baloes_cronograma';
+    const url = 'http://192.168.99.100:9090/conteudo/baloes_cronograma';
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export class ApiConteudoProvider {
   }
 
   getTextoSobreEvento(cb) {
-    const url = 'http://localhost:9090/conteudo/texto_sobre_evento';
+    const url = 'http://192.168.99.100:9090/conteudo/texto_sobre_evento';
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export class ApiConteudoProvider {
   }
 
   getTextoInformacoes(cb) {
-    const url = 'http://localhost:9090/conteudo/texto_informacoes';
+    const url = 'http://192.168.99.100:9090/conteudo/texto_informacoes';
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export class ApiConteudoProvider {
   }
 
   touchBotao() {
-    const url = 'http://localhost:9090/conteudo/touch_botao';
+    const url = 'http://192.168.99.100:9090/conteudo/touch_botao';
     const httpOptions = {
       headers: new HttpHeaders({
         "Content-Type": "application/json",

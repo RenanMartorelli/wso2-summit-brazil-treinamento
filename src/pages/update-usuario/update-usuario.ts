@@ -4,6 +4,7 @@ import { Usuario } from '../../models/usuario';
 import { ApiUsuariosProvider } from '../../providers/api-usuarios/api-usuarios';
 import { UsuarioAtivoProvider } from '../../providers/usuario-ativo/usuario-ativo';
 import { LoginPage } from '../login/login';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /**
  * Generated class for the UpdateUsuarioPage page.
@@ -25,6 +26,9 @@ export class UpdateUsuarioPage {
   public pais: string;
   public estado: string;
   public areaDeInteresse: string;
+  private updateForm: FormGroup;
+  private tentouEnviar: boolean;
+  private existeErroServidor: boolean;
 
   public paises = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas"
     , "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands"
@@ -47,11 +51,19 @@ export class UpdateUsuarioPage {
     public navCtrl: NavController,
     public apiUsuarios: ApiUsuariosProvider,
     private toastCtrl: ToastController,
-    public navParams: NavParams) {
-    this.numeroTelefone = this.usuarioAtivo.usuario.numeroTelefone;
-    this.cargo = this.usuarioAtivo.usuario.cargo;
-    this.empresa = this.usuarioAtivo.usuario.empresa;
-    this.areaDeInteresse = this.usuarioAtivo.usuario.areaDeInteresse;
+    public navParams: NavParams,
+    public formBuilder: FormBuilder) {
+
+    let areaDeInteresseFormatada = this.usuarioAtivo.usuario.areaDeInteresse.split(", ");
+    console.log(areaDeInteresseFormatada);
+    this.tentouEnviar = false;
+    this.existeErroServidor = false;
+    this.updateForm = formBuilder.group({
+      numeroTelefone: [this.usuarioAtivo.usuario.numeroTelefone, Validators.compose([Validators.required, Validators.minLength(12)])],
+      cargo: [this.usuarioAtivo.usuario.cargo, Validators.compose([Validators.minLength(5), Validators.maxLength(50)])],
+      empresa: [this.usuarioAtivo.usuario.empresa, Validators.compose([Validators.minLength(2), Validators.maxLength(35)])],
+      areaDeInteresse: [areaDeInteresseFormatada]
+    })
   }
 
   ionViewDidLoad() {
@@ -61,7 +73,11 @@ export class UpdateUsuarioPage {
 
   atualizaDados() {
 
+    if (!this.validaForm()) return;
+
     let areaDeInteresseFormatada: string
+    this.areaDeInteresse = this.updateForm.controls.areaDeInteresse.value;
+    console.log(this.areaDeInteresse);
     for (let i = 0; i < this.areaDeInteresse.length; i++) {
       if (i == 0) {
         areaDeInteresseFormatada = this.areaDeInteresse[i];
@@ -74,21 +90,33 @@ export class UpdateUsuarioPage {
     let usuario: Usuario = {
       nome: this.usuarioAtivo.usuario.nome,
       sobrenome: this.usuarioAtivo.usuario.sobrenome,
+      nomeUsuario: this.usuarioAtivo.usuario.nomeUsuario,
       id: this.usuarioAtivo.usuario.id,
       email: this.usuarioAtivo.usuario.email,
-      numeroTelefone: this.numeroTelefone,
-      cargo: this.cargo,
-      empresa: this.empresa,
+      numeroTelefone: this.updateForm.controls.numeroTelefone.value,
+      cargo: this.updateForm.controls.cargo.value,
+      empresa: this.updateForm.controls.empresa.value,
       areaDeInteresse: areaDeInteresseFormatada,
       estado: this.usuarioAtivo.usuario.estado,
       pais: this.usuarioAtivo.usuario.pais,
     }
     this.apiUsuarios.atualizaUsuario(usuario, () => {
+      //callback sucesso
       console.log("Usuário atualizado com sucesso!");
       this.presentToast()
       this.navCtrl.pop();
+    }, () => {
+      //callback erro
+      this.existeErroServidor = true;
     });
     console.log('funcao funcionando');
+  }
+
+  validaForm() {
+    if (!this.updateForm.valid) {
+      this.tentouEnviar = true;
+      return false;
+    } else return true;
   }
 
   presentToast() {
