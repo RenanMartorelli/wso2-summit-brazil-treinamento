@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 import 'rxjs/add/operator/filter';
-import { Subscription } from 'rx';
+import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { Coordenada } from '../../models/coordenada';
 import { UsuarioAtivoProvider } from '../usuario-ativo/usuario-ativo';

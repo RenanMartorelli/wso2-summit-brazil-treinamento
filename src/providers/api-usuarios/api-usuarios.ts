@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
-import { Observable } from 'rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { UsuarioAtivoProvider } from '../usuario-ativo/usuario-ativo';
@@ -36,7 +35,7 @@ export class ApiUsuariosProvider {
     }
     this.http.post(url, "grant_type=password&username=admin&password=admin", httpOptions)
       .map((res: Response) => <LoginToken>res)
-      .subscribe(data => {
+      .subscribe(data => { 
         console.log(data.access_token);
         this._scimAdminToken = data.access_token;
       });

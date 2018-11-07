@@ -17,30 +17,34 @@
 
 
 
-  ion-title{
+ion-app{
 
-    @font-face {
-        font-family: 'Nunito Sans';
-        font-style: normal;
-        font-weight: 300;
-        src: url('../assets/fonts/Nunito/300/nunito300.woff2');
-      
-      }
 
+  p {
     font-family: 'Nunito Sans' !important;
-    font-weight: 400 !important;
+    font-weight: 300 !important; 
   }
 
-  ion-content{
-    @font-face {
-        font-family: 'Nunito Sans';
-        font-style: normal;
-        font-weight: 300;
-        src: url('../assets/fonts/Nunito/300/nunito300.woff2');
-      
-      }
+  font-family: 'Nunito Sans' !important;
+  font-weight: 400 !important; 
 
+  h5,h6,h4,h3{
     font-family: 'Nunito Sans' !important;
-    font-weight: 400 !important;
+    font-weight: 600 !important; 
   }
+
+  button {
+    font-family: 'Nunito Sans' !important;
+    font-weight: 700 !important; 
+  }
+
+  div{
+    font-family: 'Nunito sans' !important;
+    font-weight: 600 !important;
+  }
+}
+
+
+
+
 
