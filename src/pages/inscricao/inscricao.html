@@ -54,14 +54,6 @@
         </ion-input>
       </ion-item>
 
-      <ion-item class="input-box">
-        <ion-input formControlName="cargo" name="cargo" type="text" placeholder="Cargo atual"></ion-input>
-      </ion-item>
-
-      <ion-item class="input-box">
-        <ion-input formControlName="empresa" name="empresa" type="text" placeholder="Empresa"></ion-input>
-      </ion-item>
-
       <ion-item class="input-box input-box-select">
         <ion-select placeholder="País" name="pais" formControlName="pais">
           <ion-option *ngFor="let pais of paises" value="{{pais}}">{{pais}}</ion-option>
@@ -70,18 +62,6 @@
 
       <ion-item class="input-box">
         <ion-input formControlName="estado" name="estado" type="text" type="text" placeholder="Estado"></ion-input>
-      </ion-item>
-
-      <ion-item class="input-box input-box-select">
-        <ion-select formControlName="areaDeInteresse" name="areaDeInteresse" placeholder="Área de Interesse" multiple="true">
-          <ion-option value="api management">API Management</ion-option>
-          <ion-option value="integration">Integration</ion-option>
-          <ion-option value="identity e access management">Identity e Access Management</ion-option>
-          <ion-option value="analytics e stream processing">Analytics e Stream Processing</ion-option>
-          <ion-option value="financial solutions">Financial Solutions</ion-option>
-          <ion-option value="iot">IoT</ion-option>
-          <ion-option value="outros">Outros</ion-option>
-        </ion-select>
       </ion-item>
 
     </ion-list>
@@ -98,11 +78,8 @@
     <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.email.valid">E-mail</h6>
     <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.senha.valid">Senha</h6>
     <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.numeroTelefone.valid">Telefone</h6>
-    <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.cargo.valid">Cargo atual</h6>
-    <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.empresa.valid">Empresa</h6>
     <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.pais.valid">País</h6>
     <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.estado.valid">Estado</h6>
-    <h6 *ngIf="tentouEnviar && !inscricaoForm.controls.areaDeInteresse.valid">Área de Interesse</h6>
 
     <h6 *ngIf="existeErroServidor">{{this.mensagemErro}}
     </h6>

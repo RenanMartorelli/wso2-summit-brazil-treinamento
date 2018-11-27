@@ -1,20 +1,31 @@
 {
     "schemas": [],
     "name": {
-        "familyName": "Silva",
-        "givenName": "silvao"
+        "familyName": "",
+        "givenName": ""
     },
-    "userName": "Rogerio",
-    "password": "silvaowso2",
+    "userName": "",
+    "password": "",
     "emails": [
         {
             "primary": true,
-            "value": "silvao.jackson@gmail.com",
-            "type": "home"
-        },
-        {
-            "value": "silvao@wso2.com",
+            "value": "",
             "type": "work"
+        }
+    ],
+    "addresses": [
+        {
+            "type": "work",
+            "region": "",
+            "country": "",
+            "formatted": " / ",
+            "primary": true
+        }
+    ],
+    "phoneNumbers": [
+        {
+            "value": "",
+            "type": "mobile"
         }
     ]
 }

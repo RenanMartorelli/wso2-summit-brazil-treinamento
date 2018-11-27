@@ -24,12 +24,8 @@ export class UsuarioAtivoProvider {
     email: "",
     senha: "",
     numeroTelefone: "",
-    cargo: "",
-    empresa: "",
     pais: "",
     estado: "",
-    areaDeInteresse: "",
-    aceitaMensagens: true
   }
 
   constructor(
@@ -39,7 +35,6 @@ export class UsuarioAtivoProvider {
     this.isLogado = false;
     console.log('Hello UsuarioAtivoProvider Provider');
     console.log(this.usuario);
-
   }
 
   setAccessTokens(access_token, refresh_token) {
@@ -47,29 +42,32 @@ export class UsuarioAtivoProvider {
     this.refreshTokenUsuario = refresh_token;
   }
 
-  setUsuario(usuario, id_usuario) {
-    console.log(usuario);
+  setUsuario(jsonUsuarioSCIM, id_usuario) {
+    // Define o usuário ativo dentro da aplicação com base nos valores obtidos pela requisição SCIM
+    console.log(jsonUsuarioSCIM);
     this.usuario = {
-      nome: "", sobrenome: "", nomeUsuario: "", email: "", senha: "",
-      numeroTelefone: "", cargo: "", empresa: "", pais: "",
-      estado: "", areaDeInteresse: "", id: "", aceitaMensagens: true
+      nome: "",
+      sobrenome: "",
+      nomeUsuario: "",
+      email: "",
+      senha: "",
+      numeroTelefone: "",
+      pais: "",
+      estado: "",
+      id: "",
     }
 
-    this.usuario.nome = usuario.name.familyName;
-    this.usuario.sobrenome = usuario.name.givenName;
-    this.usuario.nomeUsuario = usuario.userName;
-    this.usuario.email = usuario.emails[0].value;
-    this.usuario.numeroTelefone = usuario.phoneNumbers[0].value;
-    let endereco = usuario.addresses[0].value.split(" / ");
+    this.usuario.nome = jsonUsuarioSCIM.name.familyName;
+    this.usuario.sobrenome = jsonUsuarioSCIM.name.givenName;
+    this.usuario.nomeUsuario = jsonUsuarioSCIM.userName;
+    this.usuario.email = jsonUsuarioSCIM.emails[0].value;
+    this.usuario.numeroTelefone = jsonUsuarioSCIM.phoneNumbers[0].value;
+    let endereco = jsonUsuarioSCIM.addresses[0].value.split(" / "); // Quebrar o valor Brasil / SP
     this.usuario.pais = endereco[0];
     this.usuario.estado = endereco[1];
-    this.usuario.cargo = usuario.EnterpriseUser.department;
-    this.usuario.empresa = usuario.EnterpriseUser.organization;
-    this.usuario.areaDeInteresse = usuario.EnterpriseUser.division;
     this.usuario.id = id_usuario;
 
     this.daoUsuarios.setUsuarioAtivo(this.usuario);
-    console.log(this.usuario);
   }
 
   getUsuarioAtivoFromDAO() {
@@ -84,6 +82,7 @@ export class UsuarioAtivoProvider {
   }
 
   removeUsuario() {
+    //Limpa o usuário ativo na aplicação e remove-o no cache do celular      
     this.usuario = {
       nome: "",
       sobrenome: "",
@@ -93,11 +92,7 @@ export class UsuarioAtivoProvider {
       numeroTelefone: "",
       cargo: "",
       empresa: "",
-      pais: "",
-      estado: "",
-      areaDeInteresse: "",
       id: "",
-      aceitaMensagens: true
     }
     this.isLogado = false;
     this.daoUsuarios.deletaUsuarioAtivo();
@@ -108,12 +103,6 @@ export class UsuarioAtivoProvider {
     return (this.usuario.nome + " " + this.usuario.sobrenome);
   }
 
-  toggleAceitaMensagens() {
-    if (this.usuario.aceitaMensagens == true) {
-      this.usuario.aceitaMensagens = false
-    } else {
-      this.usuario.aceitaMensagens = true
-    }
-  }
+
 
 }

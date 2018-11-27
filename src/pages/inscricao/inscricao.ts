@@ -27,11 +27,8 @@ export class InscricaoPage {
   public senha: string;
   public confirmarSenha: string;
   public numeroTelefone: string;
-  public cargo: string;
-  public empresa: string;
   public pais: string;
   public estado: string;
-  public areaDeInteresse: string;
   private inscricaoForm: FormGroup;
   private senhaConfirmada: boolean;
   private existeErroServidor: boolean;
@@ -73,11 +70,8 @@ export class InscricaoPage {
       senha: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
       confirmarSenha: ['', Validators.compose([Validators.required, Validators.minLength(6)])], // igual ao campo senha
       numeroTelefone: ['', Validators.compose([Validators.required, Validators.minLength(12)])], // criar máscara
-      cargo: ['', Validators.compose([Validators.minLength(5), Validators.maxLength(50)])],
-      empresa: ['', Validators.compose([Validators.minLength(2), Validators.maxLength(35)])],
       pais: ['Brasil', Validators.compose([Validators.required])],
-      estado: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
-      areaDeInteresse: ['']
+      estado: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])]
     });
   }
 
@@ -99,18 +93,7 @@ export class InscricaoPage {
 
     if (!this.validaForm()) return;
 
-    let areaDeInteresseFormatada: string
-    console.log(this.inscricaoForm.controls.areaDeInteresse.value);
-    this.areaDeInteresse = this.inscricaoForm.controls.areaDeInteresse.value;
-    for (let i = 0; i < this.areaDeInteresse.length; i++) {
-      if (i == 0) {
-        areaDeInteresseFormatada = this.areaDeInteresse[i];
-      } else {
-        areaDeInteresseFormatada = areaDeInteresseFormatada + ", " + this.areaDeInteresse[i];
-      }
-    }
 
-    console.log(areaDeInteresseFormatada);
     let usuario: Usuario = {
       nome: this.firstLetterUCase(this.inscricaoForm.controls.nome.value.toLocaleLowerCase()),
       sobrenome: this.firstLetterUCase(this.inscricaoForm.controls.sobrenome.value.toLocaleLowerCase()),
@@ -118,11 +101,8 @@ export class InscricaoPage {
       email: this.inscricaoForm.controls.email.value,
       senha: this.inscricaoForm.controls.senha.value,
       numeroTelefone: this.inscricaoForm.controls.numeroTelefone.value,
-      cargo: this.inscricaoForm.controls.cargo.value,
-      empresa: this.inscricaoForm.controls.empresa.value,
       estado: this.inscricaoForm.controls.estado.value,
-      pais: this.inscricaoForm.controls.pais.value,
-      areaDeInteresse: areaDeInteresseFormatada,
+      pais: this.inscricaoForm.controls.pais.value
     }
     this.apiUsuarios.criaUsuario(usuario, () => {
       //callback de sucesso

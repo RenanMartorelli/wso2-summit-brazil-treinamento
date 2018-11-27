@@ -21,11 +21,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class UpdateUsuarioPage {
 
   public numeroTelefone: string;
-  public cargo: string;
-  public empresa: string;
   public pais: string;
   public estado: string;
-  public areaDeInteresse: string;
   private updateForm: FormGroup;
   private tentouEnviar: boolean;
   private existeErroServidor: boolean;
@@ -54,15 +51,13 @@ export class UpdateUsuarioPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder) {
 
-    let areaDeInteresseFormatada = this.usuarioAtivo.usuario.areaDeInteresse.split(", ");
-    console.log(areaDeInteresseFormatada);
     this.tentouEnviar = false;
     this.existeErroServidor = false;
     this.updateForm = formBuilder.group({
       numeroTelefone: [this.usuarioAtivo.usuario.numeroTelefone, Validators.compose([Validators.required, Validators.minLength(12)])],
-      cargo: [this.usuarioAtivo.usuario.cargo, Validators.compose([Validators.minLength(5), Validators.maxLength(50)])],
-      empresa: [this.usuarioAtivo.usuario.empresa, Validators.compose([Validators.minLength(2), Validators.maxLength(35)])],
-      areaDeInteresse: [areaDeInteresseFormatada]
+      email: [this.usuarioAtivo.usuario.email, Validators.compose([Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(64)])], // regex de e-mail, também não pode estar repetido - async
+      pais: ['Brasil', Validators.compose([Validators.required])],
+      estado: [this.usuarioAtivo.usuario.estado, Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])]
     })
   }
 
@@ -75,30 +70,16 @@ export class UpdateUsuarioPage {
 
     if (!this.validaForm()) return;
 
-    let areaDeInteresseFormatada: string
-    this.areaDeInteresse = this.updateForm.controls.areaDeInteresse.value;
-    console.log(this.areaDeInteresse);
-    for (let i = 0; i < this.areaDeInteresse.length; i++) {
-      if (i == 0) {
-        areaDeInteresseFormatada = this.areaDeInteresse[i];
-      } else {
-        areaDeInteresseFormatada = areaDeInteresseFormatada + ", " + this.areaDeInteresse[i];
-      }
-    }
 
-    console.log(areaDeInteresseFormatada);
     let usuario: Usuario = {
       nome: this.usuarioAtivo.usuario.nome,
       sobrenome: this.usuarioAtivo.usuario.sobrenome,
       nomeUsuario: this.usuarioAtivo.usuario.nomeUsuario,
       id: this.usuarioAtivo.usuario.id,
-      email: this.usuarioAtivo.usuario.email,
+      email: this.updateForm.controls.email.value,
       numeroTelefone: this.updateForm.controls.numeroTelefone.value,
-      cargo: this.updateForm.controls.cargo.value,
-      empresa: this.updateForm.controls.empresa.value,
-      areaDeInteresse: areaDeInteresseFormatada,
-      estado: this.usuarioAtivo.usuario.estado,
-      pais: this.usuarioAtivo.usuario.pais,
+      estado: this.updateForm.controls.estado.value,
+      pais: this.updateForm.controls.pais.value,
     }
     this.apiUsuarios.atualizaUsuario(usuario, () => {
       //callback sucesso

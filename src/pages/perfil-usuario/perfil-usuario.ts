@@ -58,7 +58,7 @@ export class PerfilUsuarioPage {
   }
 
   toggleChat() {
-    this.usuarioAtivo.toggleAceitaMensagens();
+
   }
 
   deslogar() {
